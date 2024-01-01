@@ -1,0 +1,1 @@
+select * from v_resumo_mapa_frios_8003 where numcar = 219

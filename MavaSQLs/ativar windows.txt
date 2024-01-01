@@ -1,0 +1,5 @@
+slmgr /ipk -- serial windows
+
+slmgr /skms kms8.msguides.com
+
+slmgr / ato

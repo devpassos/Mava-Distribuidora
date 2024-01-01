@@ -1,0 +1,1 @@
+update pcprodut set controlavalidadedolote = 'S', estoqueporlote = 'S' where codfornec = 332

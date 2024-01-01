@@ -1,0 +1,31 @@
+
+-- consulta as duas tabelas lado a lado (regiao lado a lado)
+
+select r3.codprod, r3.numregiao, r3.ptabela, r3.pvenda, r3.ptabela1, r3.pvenda1,
+r5.codprod, r5.numregiao, r5.ptabela, r5.pvenda, r5.ptabela1, r5.pvenda1
+from pctabpr r3, pctabpr r5
+
+where r3.numregiao = 3 and  r5.codprod = r3.codprod and r5.numregiao = 5
+
+
+
+-- Replica a tabela b para a tabela a, no caso a t5 para a t3
+update pctabpr t3 set 
+t3.ptabela  = (select t5.ptabela  from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela1 = (select t5.ptabela1 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela2 = (select t5.ptabela2 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela3 = (select t5.ptabela3 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela4 = (select t5.ptabela4 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela5 = (select t5.ptabela5 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela6 = (select t5.ptabela6 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.ptabela7 = (select t5.ptabela7 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+
+t3.pvenda  = (select t5.pvenda  from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda1 = (select t5.pvenda1 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda2 = (select t5.pvenda2 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda3 = (select t5.pvenda3 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda4 = (select t5.pvenda4 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda5 = (select t5.pvenda5 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda6 = (select t5.pvenda6 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod),
+t3.pvenda7 = (select t5.pvenda7 from pctabpr t5 where t5.numregiao = 5 and t5.codprod = t3.codprod)
+where t3.numregiao = 3

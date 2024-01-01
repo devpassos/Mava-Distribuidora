@@ -1,0 +1,85 @@
+==== BASE DE TESTE =================
+select distinct 
+t1.codfornec as "CODPROD - NFE", t2.codfab as "COD FORNEC - SIST",
+
+t1.nomefantasia as "FORNECEDOR - NFE", t1.descricaoproduto AS "DESCRI PROD - NFE",
+
+t2.descricao AS "DESCRI PROD - SIST",t1.ncm as "NCM - NFE",
+
+t2.codncmex as "NCM - SISTEMA", t4.ncm as "NCM TBL Trib",
+
+t4.codfigura||' - ' || t5.descricao as "FIGURA FISC - SIST",
+
+t1.uf as "UF FORNEC - NFE", t3.estado as "UF FORNEC- SIST",
+
+t1.cfop as "CFOP - NFE", t5.codfiscalent as "CFOP Entrada - SIST",
+
+nvl(t1.csttributado,'')||nvl(t1.cstst,'') as "CST - NFE", t5.sittribut as "CST - SIST",
+
+nvl((nvl(t1.aliqicmsnormal,'')||nvl(t1.aliqicmsstorigem,'')),0)  as "ICMS Orig - NFe", t5.percaliqint as "ICMS Sistema",
+
+nvl(t1.fcpst,'0') as "%FCP - NFe", t5.percfecp as "%FCP - Sist",
+
+nvl(t1.mva,'0') as "MVA - NFe", t5.perciva as "MVA - Sist",
+
+t2.codprod AS CODIGO_PRODUTO, t2.codfornec AS "COD FORNEC - SIST", 
+
+t3.fornecedor as FORNECEDORSISTEMA,
+
+t1.cnpj as "CNPJ - NF-e", REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','') as "CNPJ - SIST",
+
+t1.chaveacesso
+
+FROM testeanalisetribut2 t1, teste.pcprodut t2, TESTE.pcfornec t3, TESTE.pctribentrada t4, TESTE.pctribfigura t5
+where t1.ncm = t2.codncmex
+--and t1.cnpj = REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','')
+and t2.codfornec = t3.codfornec
+and t1.codfornec = t2.codfab
+and t2.codncmex = t4.ncm
+and t4.codfigura = t5.codfigura
+and t5.codfigura != 33
+
+order BY t2.descricao
+
+============ BASE PRODUÇÃO ======
+select distinct 
+t1.codfornec as "CODPROD - NFE", t2.codfab as "COD FORNEC - SIST",
+
+t1.nomefantasia as "FORNECEDOR - NFE", t1.descricaoproduto AS "DESCRI PROD - NFE",
+
+t2.descricao AS "DESCRI PROD - SIST",t1.ncm as "NCM - NFE",
+
+t2.codncmex as "NCM - SISTEMA", t4.ncm as "NCM TBL Trib",
+
+t4.codfigura||' - ' || t5.descricao as "FIGURA FISC - SIST",
+
+t1.uf as "UF FORNEC - NFE", t3.estado as "UF FORNEC- SIST",
+
+t1.cfop as "CFOP - NFE", t5.codfiscalent as "CFOP Entrada - SIST",
+
+nvl(t1.csttributado,'')||nvl(t1.cstst,'') as "CST - NFE", t5.sittribut as "CST - SIST",
+
+nvl((nvl(t1.aliqicmsnormal,'')||nvl(t1.aliqicmsstorigem,'')),0)  as "ICMS Orig - NFe",t1.aliqicmsstdestino as "ICMS Destino NFE" , t5.percaliqint as "ICMS Sistema",
+
+nvl(t1.fcpst,'0') as "%FCP - NFe", t5.percfecp as "%FCP - Sist",
+
+nvl(t1.mva,'0') as "MVA - NFe", t5.perciva as "MVA - Sist",
+
+t2.codprod AS CODIGO_PRODUTO, t2.codfornec AS "COD FORNEC - SIST", 
+
+t3.fornecedor as FORNECEDORSISTEMA,
+
+t1.cnpj as "CNPJ - NF-e", REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','') as "CNPJ - SIST",
+
+t1.chaveacesso
+
+FROM testeanalisetribut2 t1, MAVA.pcprodut t2, MAVA.pcfornec t3, MAVA.pctribentrada t4, MAVA.pctribfigura t5
+where t1.ncm = t2.codncmex
+--and t1.cnpj = REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','')
+and t2.codfornec = t3.codfornec
+and t1.codfornec = t2.codfab
+and t2.codncmex = t4.ncm
+and t4.codfigura = t5.codfigura
+and t5.codfigura != 33
+
+order BY t2.descricao

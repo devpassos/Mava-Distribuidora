@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+    <hr>
+    <form method="post" action="{{url_for('gravarca')}}">
+
+        <fieldset>
+             <label for="codigo" class="table-active">Código</label>
+                <input type="text" id="codigo" name="codigo"/>
+
+            <label for="nome" class="table-active">Nome</label>
+                <input type="text" id="nome" name="nome"/>
+
+            <button type="submit" class="btn btn-primary btn-salvar">Incluir</button>
+            <a class="btn btn-danger" href="{{url_for('index')}}">Cancelar</a>
+        </fieldset>
+
+        <hr>
+        <fieldset>
+            <table>
+                <thead>Lista de RCA's Cadastrados</thead>
+                <th>Código</th>
+                <th> </th>
+                <th>Nome</th>
+                <tbody>
+                {% for rca in rcas %}
+                <tr>
+                    <td>{{ rca.idrca }}</td>
+                    <td> </td>
+                    <td>{{rca.nome}}</td>
+                    <td><a href="{{ url_for('delete_rca', id=rca.idrca) }}">Deletar</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        <hr>
+        </fieldset>
+    </form>
+
+{% endblock %}

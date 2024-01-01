@@ -1,0 +1,43 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+    <hr>
+    <form method="post" action="{{url_for('gravaitemavalrca')}}">
+
+        <fieldset>
+             <label for="descricao" class="table-active">Descricao</label>
+                <input type="text" id="descricao" name="descricao"/>
+
+            <label for="peso" class="table-active">Peso</label>
+                <input type="text" id="peso" name="peso"/>
+
+            <button type="submit" class="btn btn-primary btn-salvar">Incluir</button>
+            <a class="btn btn-danger" href="{{url_for('index')}}">Cancelar</a>
+        </fieldset>
+
+        <hr>
+        <fieldset>
+            <table>
+                <thead>Itens de Avaliação de RCA's Cadastrados</thead>
+                <th>Código</th>
+                <th> </th>
+                <th>Descricao</th>
+                <th>Peso</th>
+                <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td> </td>
+                    <td>{{ item.descricao }}</td>
+                    <td>{{ item.peso }}</td>
+
+                    <td><a href="{{ url_for('delete_item_aval_rca', id=item.id) }}">Deletar</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        <hr>
+        </fieldset>
+    </form>
+
+{% endblock %}

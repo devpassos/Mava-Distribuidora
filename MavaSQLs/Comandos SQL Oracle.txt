@@ -1,0 +1,44 @@
+--Selecionar itens na tabela de preço através do código de fabricante:
+select t.codprod, t.numregiao, t.ptabela, t.pvenda from pctabpr t
+where t.numregiao = 7 and t.codprod = (select codprod from pccodfabrica where codfab = '12381132')
+
+
+--Atualizar preço na tabela de preço usando o código de fabricação:
+update pctabpr set pvenda = 2.168209 where numregiao = 7 and codprod = (select codprod from pccodfabrica where codfab = '12381132')
+
+
+-- Atualizar flag venda fracionada e multiplo do produto
+update pcprodfilial set
+aceitavendafracao = 'N',
+multiplo = 1.000000
+where codprod in (select codprod from pcprodut where tipoestoque = 'PA')
+
+-- Voltar Venda Fracionada para produtos do departamento 1
+update pcprodfilial set
+aceitavendafracao = 'S',
+multiplo = 0.001000
+where codprod in (select codprod from pcprodut where codepto = 1)
+
+
+-- Exibir todos os produtos que têm tipo de estpoque padrão (PA)
+
+-- Tabela pcprodut
+select codprod, descricao, tipoestoque, aceitavendafracao, multiplo from pcprodut where tipoestoque = 'PA' 
+
+-- Tabela pcprodfilial
+select * from pcprodfilial where codprod in (select codprod from pcprodut where tipoestoque = 'PA')
+
+-- Busca os itens juntando com a tabela de trbutação de entrada, levando em conta o NCM do produto, para saber se existe algum item
+-- na tabela de produtos que não existe na tabela de tributação de entrada. (exibe todas as tributações cadastradas para o Item
+-- ainda precisa ser melhorada.
+
+--Versão 1
+select distinct
+p.codprod, p.descricao, 
+p.codfornec, p.nbm, 
+p.codncmex, t.*
+from pcprodut p, pctribentrada t where p.codncmex = t.ncm and t.tipofornec = 'I'
+order by codprod
+
+-- Versão 2 (apenas como teste)
+select codprod, codncmex, descricao from pcprodut where codncmex in (select ncm from pctribentrada)

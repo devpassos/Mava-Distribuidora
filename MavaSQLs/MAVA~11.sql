@@ -1,0 +1,1 @@
+SELECT 'Prcon R. da Ajuda, 05 subsolo, centro - Rio de Janeiro - RJ Disque Procon  151' FROM pcmov where numtransvenda = :NUM_TRANSACAO;

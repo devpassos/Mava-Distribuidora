@@ -1,0 +1,106 @@
+select distinct p.codprod, p.descricao from teste.pcprodut p 
+    where p.codprod in
+    ( 
+        select DISTINCT "CODIGO_PRODUTO"
+        from
+        (
+            select t1.CPROD as "CODPROD - NFE", t2.codfab as "COD FORNEC - SIST", 
+            t1.xfant as "FORNECEDOR - NFE", t1.XPROD AS "DESCRI PROD - NFE",
+            t2.descricao AS "DESCRI PROD - SIST",
+            t1.ncm as "NCM - NFE", t2.codncmex as "NCM - SISTEMA", t4.ncm as "NCM TBL Trib",
+            t4.codfigura||' - ' || t5.descricao as "FIGURA FISC - SIST",
+            t1.uf as "UF FORNEC - NFE", t3.estado as "UF FORNEC- SIST",
+            t1.cfop as "CFOP - NFE", t5.codfiscalent as "CFOP Entrada - SIST",
+            t1.cst as "CST - NFE", t5.sittribut as "CST - SIST",
+            nvl((nvl(t1.picms,'')||nvl(t1.picms27,'')),0)  as "ICMS Orig - NFe", t5.percaliqint as "ICMS Sistema",
+            t1.pfcp as "%FCP - NFe", t5.percfecp as "%FCP - Sist",
+            t1.pmvast as "MVA - NFe", t5.perciva as "MVA - Sist",
+            t2.codprod AS CODIGO_PRODUTO, t2.codfornec AS "COD FORNEC - SIST", 
+            t3.fornecedor as FORNECEDORSISTEMA,
+            t1.cnpj as "CNPJ - NF-e", REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','') as "CNPJ - SIST"
+
+            FROM testeanalisetribprod t1, teste.pcprodut t2, TESTE.pcfornec t3, TESTE.pctribentrada t4, TESTE.pctribfigura t5
+            where t2.codncmex = t1.ncm ||'.'
+            and t1.cnpj = REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','')
+            and t1.cprod = t2.codfab
+            and t2.codncmex = t4.ncm
+            and t4.codfigura = t5.codfigura
+            and t5.codfigura != 33
+            order BY t2.codncmex
+        )
+    ) order by p.descricao
+
+
+
+
+
+
+
+select t1.CPROD as "CODPROD - NFE", t2.codfab as "COD FORNEC - SIST", 
+            t1.xfant as "FORNECEDOR - NFE", t1.XPROD AS "DESCRI PROD - NFE",
+            t2.descricao AS "DESCRI PROD - SIST",
+            t1.ncm as "NCM - NFE", t2.codncmex as "NCM - SISTEMA", t4.ncm as "NCM TBL Trib",
+            t4.codfigura||' - ' || t5.descricao as "FIGURA FISC - SIST",
+            t1.uf as "UF FORNEC - NFE", t3.estado as "UF FORNEC- SIST",
+            t1.cfop as "CFOP - NFE", t5.codfiscalent as "CFOP Entrada - SIST",
+            t1.cst as "CST - NFE", t5.sittribut as "CST - SIST",
+            nvl((nvl(t1.picms,'')||nvl(t1.picms27,'')),0)  as "ICMS Orig - NFe", t5.percaliqint as "ICMS Sistema",
+            t1.pfcp as "%FCP - NFe", t5.percfecp as "%FCP - Sist",
+            t1.pmvast as "MVA - NFe", t5.perciva as "MVA - Sist",
+            t2.codprod AS CODIGO_PRODUTO, t2.codfornec AS "COD FORNEC - SIST", 
+            t3.fornecedor as FORNECEDORSISTEMA,
+            t1.cnpj as "CNPJ - NF-e", REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','') as "CNPJ - SIST",
+            t1.id
+
+            FROM testeanalisetribprod t1, teste.pcprodut t2, TESTE.pcfornec t3, TESTE.pctribentrada t4, TESTE.pctribfigura t5
+            where t2.codncmex = t1.ncm ||'.'
+            and t1.cnpj = REPLACE(replace(replace(t3.cgc,'/',''),'-',''),'.','')
+            and t1.cprod = t2.codfab
+            and t2.codncmex = t4.ncm
+            and t4.codfigura = t5.codfigura
+            and t5.codfigura != 33
+            order BY t2.descricao
+
+
+======================================
+Avulsos
+
+/*SELECT * FROM testeanalisetribut2
+where codfornec in (select codfornec from testeanalisetribut2 where length(cnpj) = 13)*/
+
+--update testeanalisetribut2 set cnpj = '0'||cnpj where length(cnpj) = 13
+
+--update testeanalisetribut2 set codfornec = LPAD(codfornec,6,0) where NOMEFANTASIA = 'PORCOLIM'
+
+--update testeanalisetribut2 set csttributado = LPAD(csttributado,2,'0') where csttributado is not null
+
+--update testeanalisetribut2 set cstpisentrada =  LPAD(cstpisentrada,2,'0'), cstcofinsentrada = LPAD(cstcofinsentrada,2,'0')
+
+update testeanalisetribut2 set ncm = LPAD(ncm, 8,'0')||'.'
+
+-- select length(cnpj) from testeanalisetribut2
+ 
+-- select * from TESTE.pcfornec order by fornecedor--where fornecedor like '%cafe%'
+--SELECT DESCRICAO, CODFAB FROM TESTE.PCPRODUT WHERE CODFORNEC = 39
+
+
+--update testeanalisetribut2 set mva = TO_Char(SUBSTR(mva, length(mva)-3,2))||'.'||to_char(SUBSTR(mva,-2,2)) where length(mva) = 4
+
+/*select to_char(substr(mva, length(mva)-3, 2))||'.'||to_char(substr(mva, length(mva)-2, 2)) as teste_mva 
+from testeanalisetribut2 where length(mva) = 4*/
+
+--update testeanalisetribut2 set mva = to_char(to_number(mva,'L999G999D00')/100) where mva is not null
+--select to_number(mva)/100 from testeanalisetribut2
+
+
+
+
+--select * from testeanalisetribut2 where nomefantasia like '%SEARA%'
+--UPDATE testeanalisetribut2 set codfornec = lpad(codfornec,6,0) where nomefantasia like '%SEARA%'
+/*select * from TESTE.pccodfabrica where codfornec in (select codfornec from TESTE.pcfornec 
+    where teste.pcfornec.fornecedor like '%SEARA%')*/
+    
+/*UPDATE TESTE.pccodfabrica SET codfab = LPAD(codfab,6,0) WHERE codfornec IN (select codfornec from TESTE.pcfornec 
+    where teste.pcfornec.fornecedor like '%SEARA%')*/
+    
+SELECT * FROM TESTE.PCPRODUT WHERE CODFAB = '571954'

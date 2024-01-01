@@ -1,0 +1,39 @@
+--SELECT * FROM PCLOTE WHERE CODPROD = 15012
+--UPDATE PCLOTE SET QT = 80000 WHERE CODPROD = 15012
+--SELECT * FROM pcest WHERE CODPROD = 378
+--UPDATE PCEST SET QTEST = 80000 WHERE CODPROD = 15012
+
+--select codcli, cliente, participafuncep, tipofj from pcclient
+
+--update pcclient set participafuncep = 'S'
+
+--update pcprodut set qtunitcx = 18 where codprod = 3010
+
+--select codprod, descricao, unidademaster from pcprodut where codepto = 2
+
+---update pcembalagem set embalagem = 'CX C/12X200G' WHERE codauxiliar = '17896228100130 '
+
+--SELECT descricaonfe, peracrescimofuncep, vlacrescimofuncep FROM pcmovcomple WHERE NUMTRANSITEM IN (SELECT numtransitem FROM pcmov WHERE numtransvenda = 1062)
+
+--SELECT  * FROM pcmovcomple WHERE NUMTRANSITEM IN (SELECT numtransitem FROM pcmov WHERE numtransvenda = 1062)
+
+/*
+select comple.descricaonfe, comple.peracrescimofuncep, mov.qt, comple.vlacrescimofuncep from pcmov mov, pcmovcomple comple
+
+where mov.numtransitem = comple.numtransitem
+and
+mov.numtransvenda = 1062
+*/
+--select * from pclote where codprod = 378
+--update pclote set datafabricacao = to_date('01/06/2020', 'DD/MM/YY') where codprod = 378-- AND DATAFABRICACAO = TO_CHAR('01/09/2020', 'DD/MM/YY) 
+--SELECT TO_NUMBER('100,01', '999D99') FROM DUAL
+
+
+
+
+
+
+and
+item.codprod in (14460, 15108, 82708, 9741, 84220, 81010, 
+                 13010, 30302, 17061,72030, 15002, 15012, 
+                 15046, 15072, 15074, 15016, 15079,15076, 15109)
